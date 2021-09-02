@@ -1,20 +1,15 @@
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using back_end.Extension;
+using back_end.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace back_end
 {
@@ -50,11 +45,20 @@ namespace back_end
 			services.AddControllers();
 
 			// Database
+			services.AddDbContext<FSContext>(options =>
+			{
+				options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+			});
 
+			// DI
 
-			services.AddSwaggerGen(c =>
-				c.SwaggerDoc("v1", new OpenApiInfo { Title = "back_end", Version = "v1" })
-			);
+			// JWT
+			services.AddAuthentication();
+			services.ConfigureIdentity();
+			services.ConfigureJWT(this.Configuration);
+
+			// Swagger
+			services.ConfigureSwaggerWithAuth();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
