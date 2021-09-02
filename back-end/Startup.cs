@@ -10,6 +10,8 @@ using Newtonsoft.Json.Serialization;
 using back_end.Extension;
 using back_end.Data;
 using Microsoft.EntityFrameworkCore;
+using back_end.Repository.Interface;
+using back_end.Repository.Implement;
 
 namespace back_end
 {
@@ -51,6 +53,7 @@ namespace back_end
 			});
 
 			// DI
+			services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 			// JWT
 			services.AddAuthentication();
