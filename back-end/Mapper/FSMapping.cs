@@ -17,6 +17,11 @@ namespace back_end.Mapper
 			CreateMap<CategoryUpsertDTO, Category>();
 
 			CreateMap<UserForRegistrationDTO, User>();
+
+			CreateMap<ShoppingCart, ShoppingCartDTO>()
+				.ForMember(scDTO => scDTO.Product, prop => prop.MapFrom(sc => sc.Product.Name))
+				.ForMember(scDTO => scDTO.Price, prop => prop.MapFrom(sc => sc.Product.Price));
+			CreateMap<ShoppingCartAddDTO, ShoppingCart>();
 		}
 	}
 }

@@ -15,8 +15,5 @@ namespace back_end.Models
 		public Product Product { get; set; }
 
 		public int Count { get; set; } = 1;
-
-		[NotMapped]
-		public double Price { get; set; }
 	}
 }

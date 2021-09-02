@@ -12,6 +12,8 @@ namespace back_end.Models
 		[ForeignKey(nameof(UserId))]
 		public User User { get; set; }
 
+		public string DeliveryAddress { get; set; }
+
 		public double OrderTotal { get; set; }
 
 		public DateTime OrderDate { get; set; }
