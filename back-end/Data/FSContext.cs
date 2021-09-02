@@ -1,6 +1,7 @@
 using back_end.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using back_end.Data.Configuration;
 
 namespace back_end.Data
 {
@@ -11,6 +12,9 @@ namespace back_end.Data
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
 			base.OnModelCreating(builder);
+			builder.ApplyConfiguration(new RoleConfiguration());
+			builder.ApplyConfiguration(new CategoryConfiguration());
+			builder.ApplyConfiguration(new ProductConfiguration());
 			foreach (var entityType in builder.Model.GetEntityTypes())
 			{
 				var tableName = entityType.GetTableName();

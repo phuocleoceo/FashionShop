@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using back_end.Repository.Interface;
 using back_end.Repository.Implement;
 using back_end.Mapper;
+using back_end.Authentication;
 
 namespace back_end
 {
@@ -55,6 +56,7 @@ namespace back_end
 
 			// DI
 			services.AddScoped<IUnitOfWork, UnitOfWork>();
+			services.AddScoped<IAuthenticationManager, AuthenticationManager>();
 			services.AddAutoMapper(typeof(FSMapping));
 
 			// JWT

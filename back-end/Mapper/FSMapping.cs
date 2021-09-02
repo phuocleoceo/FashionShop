@@ -12,6 +12,11 @@ namespace back_end.Mapper
 				.ForMember(pDTO => pDTO.Category, prop => prop.MapFrom(p => p.Category.Name));
 			CreateMap<ProductDTO, Product>();
 			CreateMap<ProductUpsertDTO, Product>();
+
+			CreateMap<Category, CategoryDTO>();
+			CreateMap<CategoryUpsertDTO, Category>();
+
+			CreateMap<UserForRegistrationDTO, User>();
 		}
 	}
 }

@@ -275,6 +275,34 @@ namespace back_end.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Áo nam" },
+                    { 2, "Áo nữ" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "f219fc73-e757-4ca6-9eeb-d897e8769e26", "2d6a0628-366e-4aa5-b82d-c73565784094", "Admin", "ADMIN" },
+                    { "9e25392b-41cc-4902-be99-f9495882b9da", "743dd714-45af-4808-b2d2-ac5c19ec6101", "Customer", "CUSTOMER" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Products",
+                columns: new[] { "Id", "CategoryId", "ImagePath", "Name", "Price" },
+                values: new object[] { 1, 1, "a.png", "Áo sơ mi trắng", 250000.0 });
+
+            migrationBuilder.InsertData(
+                table: "Products",
+                columns: new[] { "Id", "CategoryId", "ImagePath", "Name", "Price" },
+                values: new object[] { 2, 2, "b.png", "Áo croptop đen", 200000.0 });
+
             migrationBuilder.CreateIndex(
                 name: "IX_OrderDetails_OrderHeaderId",
                 table: "OrderDetails",

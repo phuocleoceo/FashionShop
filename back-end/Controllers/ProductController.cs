@@ -26,14 +26,14 @@ namespace back_end.Controllers
 		[HttpGet]
 		public async Task<IEnumerable<ProductDTO>> GetProducts()
 		{
-			var prds = await _db.Products.GetAll(includeProperties: "Category");
+			IEnumerable<Product> prds = await _db.Products.GetAll(includeProperties: "Category");
 			return prds.Select(p => _mapper.Map<ProductDTO>(p));
 		}
 
 		[HttpGet("{id}")]
 		public async Task<ActionResult<ProductDTO>> GetProduct(int id)
 		{
-			var prd = await _db.Products.GetFirstOrDefault(c => c.Id == id,
+			Product prd = await _db.Products.GetFirstOrDefault(c => c.Id == id,
 												includeProperties: "Category");
 
 			if (prd == null)
@@ -49,7 +49,7 @@ namespace back_end.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				var prd = _mapper.Map<Product>(puDTO);
+				Product prd = _mapper.Map<Product>(puDTO);
 				await _db.Products.Add(prd);
 				await _db.SaveChanges();
 				return CreatedAtAction("GetProduct", new { id = prd.Id }, prd);
@@ -67,7 +67,7 @@ namespace back_end.Controllers
 				{
 					return NotFound();
 				}
-				var prd = _mapper.Map<Product>(puDTO);
+				Product prd = _mapper.Map<Product>(puDTO);
 				prd.Id = id;
 				await _db.Products.Update(prd);
 				await _db.SaveChanges();
