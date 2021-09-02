@@ -12,6 +12,6 @@ namespace back_end.Repository.Interface
 		IOrderHeaderRepository OrderHeaders { get; }
 		IOrderDetailRepository OrderDetails { get; }
 
-		Task Save();
+		Task SaveChanges();
 	}
 }

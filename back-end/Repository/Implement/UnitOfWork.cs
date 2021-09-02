@@ -36,7 +36,7 @@ namespace back_end.Repository.Implement
 			_db.Dispose();
 		}
 
-		public async Task Save()
+		public async Task SaveChanges()
 		{
 			await _db.SaveChangesAsync();
 		}
