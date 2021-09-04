@@ -23,7 +23,7 @@ namespace back_end.Controllers
 			_mapper = mapper;
 		}
 
-		[HttpGet]
+		[HttpGet("{UserId}")]
 		public async Task<IEnumerable<ShoppingCartDTO>> GetCarts(string UserId)
 		{
 			IEnumerable<ShoppingCart> sc = await _db.ShoppingCarts.GetAll(c => c.UserId == UserId,
@@ -55,7 +55,7 @@ namespace back_end.Controllers
 			return BadRequest();
 		}
 
-		[HttpPut("plus")]
+		[HttpPut("plus/{cartId}")]
 		public async Task<IActionResult> Plus(int cartId)
 		{
 			ShoppingCart cart = await _db
@@ -66,7 +66,7 @@ namespace back_end.Controllers
 			return NoContent();
 		}
 
-		[HttpPut("minus")]
+		[HttpPut("minus/{cartId}")]
 		public async Task<IActionResult> Minus(int cartId)
 		{
 			ShoppingCart cart = await _db
@@ -85,7 +85,7 @@ namespace back_end.Controllers
 			return NoContent();
 		}
 
-		[HttpDelete("remove")]
+		[HttpDelete("remove/{cartId}")]
 		public async Task<IActionResult> Remove(int cartId)
 		{
 			ShoppingCart cart = await _db

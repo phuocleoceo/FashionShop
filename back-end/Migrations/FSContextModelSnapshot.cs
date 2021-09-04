@@ -48,15 +48,15 @@ namespace back_end.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "b70c5add-b539-41ca-b540-1ee7307e7c2e",
-                            ConcurrencyStamp = "97e0fec2-2ca8-4118-b4b5-9624610cfbc0",
+                            Id = "79c201e6-4f95-403f-8826-4cf1dd717581",
+                            ConcurrencyStamp = "82f6a3ae-fc5e-4750-bf18-bfb265f857c8",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "5513d1ed-37da-49a3-8fdd-d2f06f6d270b",
-                            ConcurrencyStamp = "553d4b68-fc07-4b02-936b-a27840d85183",
+                            Id = "ef0f6546-1b6e-40c1-bd6a-13f1c97b70dd",
+                            ConcurrencyStamp = "5deccfc7-94d3-47b8-acbc-41311492eb52",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });
@@ -227,9 +227,6 @@ namespace back_end.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("DeliveryAddress")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");

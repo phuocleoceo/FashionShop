@@ -10,7 +10,7 @@ using back_end.Data;
 namespace back_end.Migrations
 {
     [DbContext(typeof(FSContext))]
-    [Migration("20210902141016_Init")]
+    [Migration("20210904080650_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,15 +50,15 @@ namespace back_end.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f219fc73-e757-4ca6-9eeb-d897e8769e26",
-                            ConcurrencyStamp = "2d6a0628-366e-4aa5-b82d-c73565784094",
+                            Id = "79c201e6-4f95-403f-8826-4cf1dd717581",
+                            ConcurrencyStamp = "82f6a3ae-fc5e-4750-bf18-bfb265f857c8",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "9e25392b-41cc-4902-be99-f9495882b9da",
-                            ConcurrencyStamp = "743dd714-45af-4808-b2d2-ac5c19ec6101",
+                            Id = "ef0f6546-1b6e-40c1-bd6a-13f1c97b70dd",
+                            ConcurrencyStamp = "5deccfc7-94d3-47b8-acbc-41311492eb52",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });
@@ -280,6 +280,9 @@ namespace back_end.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ImagePath")
                         .HasColumnType("nvarchar(max)");
 
@@ -300,6 +303,7 @@ namespace back_end.Migrations
                         {
                             Id = 1,
                             CategoryId = 1,
+                            Description = "Đơn giản là đẹp",
                             ImagePath = "a.png",
                             Name = "Áo sơ mi trắng",
                             Price = 250000.0
@@ -308,6 +312,7 @@ namespace back_end.Migrations
                         {
                             Id = 2,
                             CategoryId = 2,
+                            Description = "Cực kì cá tính",
                             ImagePath = "b.png",
                             Name = "Áo croptop đen",
                             Price = 200000.0

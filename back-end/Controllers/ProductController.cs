@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -6,6 +8,8 @@ using back_end.DTO;
 using back_end.Models;
 using back_end.Repository.Interface;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace back_end.Controllers
@@ -16,11 +20,13 @@ namespace back_end.Controllers
 	{
 		private readonly IUnitOfWork _db;
 		private readonly IMapper _mapper;
+		private readonly IWebHostEnvironment _env;
 
-		public ProductController(IUnitOfWork db, IMapper mapper)
+		public ProductController(IUnitOfWork db, IMapper mapper, IWebHostEnvironment env)
 		{
 			_db = db;
 			_mapper = mapper;
+			_env = env;
 		}
 
 		[HttpGet]
@@ -87,6 +93,29 @@ namespace back_end.Controllers
 			await _db.Products.Remove(id);
 			await _db.SaveChanges();
 			return NoContent();
+		}
+
+		[HttpPost("SaveFile")]
+		public async Task<IActionResult> SaveFile()
+		{
+			try
+			{
+				IFormCollection httpRequest = Request.Form;
+				IFormFile postedFile = httpRequest.Files[0];
+				string filename = postedFile.FileName;
+				string physicalPath = _env.ContentRootPath + "/Photos/" + filename;
+
+				using (var stream = new FileStream(physicalPath, FileMode.Create))
+				{
+					await postedFile.CopyToAsync(stream);
+				}
+
+				return Ok(filename);
+			}
+			catch (Exception)
+			{
+				return Ok("NewProduct.jpg");
+			}
 		}
 	}
 }

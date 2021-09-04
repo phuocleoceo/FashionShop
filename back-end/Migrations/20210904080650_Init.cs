@@ -71,6 +71,7 @@ namespace back_end.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Price = table.Column<double>(type: "float", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -289,19 +290,19 @@ namespace back_end.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "f219fc73-e757-4ca6-9eeb-d897e8769e26", "2d6a0628-366e-4aa5-b82d-c73565784094", "Admin", "ADMIN" },
-                    { "9e25392b-41cc-4902-be99-f9495882b9da", "743dd714-45af-4808-b2d2-ac5c19ec6101", "Customer", "CUSTOMER" }
+                    { "79c201e6-4f95-403f-8826-4cf1dd717581", "82f6a3ae-fc5e-4750-bf18-bfb265f857c8", "Admin", "ADMIN" },
+                    { "ef0f6546-1b6e-40c1-bd6a-13f1c97b70dd", "5deccfc7-94d3-47b8-acbc-41311492eb52", "Customer", "CUSTOMER" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "Id", "CategoryId", "ImagePath", "Name", "Price" },
-                values: new object[] { 1, 1, "a.png", "Áo sơ mi trắng", 250000.0 });
+                columns: new[] { "Id", "CategoryId", "Description", "ImagePath", "Name", "Price" },
+                values: new object[] { 1, 1, "Đơn giản là đẹp", "a.png", "Áo sơ mi trắng", 250000.0 });
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "Id", "CategoryId", "ImagePath", "Name", "Price" },
-                values: new object[] { 2, 2, "b.png", "Áo croptop đen", 200000.0 });
+                columns: new[] { "Id", "CategoryId", "Description", "ImagePath", "Name", "Price" },
+                values: new object[] { 2, 2, "Cực kì cá tính", "b.png", "Áo croptop đen", 200000.0 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderDetails_OrderHeaderId",
