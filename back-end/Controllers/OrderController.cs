@@ -49,10 +49,6 @@ namespace back_end.Controllers
 		public async Task<IActionResult> CheckOutPost(string UserId, string stripeToken,
 		 												CheckOutAlterInfor checkOutAlterInfor)
 		{
-			IEnumerable<ShoppingCartDTO> cart = (await _db.ShoppingCarts
-							.GetAll(c => c.UserId == UserId, includeProperties: "Product"))
-							.Select(c => _mapper.Map<ShoppingCartDTO>(c));
-
 			OrderHeader orderHeader = new OrderHeader
 			{
 				UserId = UserId,
@@ -63,18 +59,20 @@ namespace back_end.Controllers
 				OrderStatus = ConstantValue.OrderStatusPending,
 				OrderDate = DateTime.Now
 			};
-			//OrderTotal = cart.Sum(c => c.Total)
-
 			await _db.OrderHeaders.Add(orderHeader);
 			await _db.SaveChanges();
 
-			foreach (ShoppingCartDTO sc in cart)
+
+			IEnumerable<ShoppingCart> cart = await _db.ShoppingCarts
+							.GetAll(c => c.UserId == UserId, includeProperties: "Product");
+
+			foreach (ShoppingCart sc in cart)
 			{
 				OrderDetail orderDetail = new OrderDetail
 				{
 					ProductId = sc.ProductId,
 					OrderHeaderId = orderHeader.Id,  //orderHeader has Id after SaveChanges
-					Price = sc.Price,
+					Price = sc.Product.Price,
 					Count = sc.Count
 				};
 				orderHeader.OrderTotal += orderDetail.Count * orderDetail.Price; //update orderHeader Total
