@@ -23,7 +23,7 @@ namespace back_end.Controllers
 			_mapper = mapper;
 		}
 
-		[HttpGet("{UserId}")]
+		[HttpGet]
 		public async Task<IEnumerable<ShoppingCartDTO>> GetCarts(string UserId)
 		{
 			IEnumerable<ShoppingCart> sc = await _db.ShoppingCarts.GetAll(c => c.UserId == UserId,
@@ -50,8 +50,50 @@ namespace back_end.Controllers
 					scFromDB.Count += scaDTO.Count;
 				}
 				await _db.SaveChanges();
+				return StatusCode(201);
 			}
 			return BadRequest();
+		}
+
+		[HttpPut("plus")]
+		public async Task<IActionResult> Plus(int cartId)
+		{
+			ShoppingCart cart = await _db
+				.ShoppingCarts.GetFirstOrDefault(c => c.Id == cartId);
+			if (cart == null) return NotFound();
+			cart.Count++;
+			await _db.SaveChanges();
+			return NoContent();
+		}
+
+		[HttpPut("minus")]
+		public async Task<IActionResult> Minus(int cartId)
+		{
+			ShoppingCart cart = await _db
+				.ShoppingCarts.GetFirstOrDefault(c => c.Id == cartId);
+			if (cart == null) return NotFound();
+			if (cart.Count == 1)
+			{
+				await _db.ShoppingCarts.Remove(cart);
+			}
+			else
+			{
+				cart.Count--;
+			}
+
+			await _db.SaveChanges();
+			return NoContent();
+		}
+
+		[HttpDelete("remove")]
+		public async Task<IActionResult> Remove(int cartId)
+		{
+			ShoppingCart cart = await _db
+				.ShoppingCarts.GetFirstOrDefault(c => c.Id == cartId);
+			if (cart == null) return NotFound();
+			await _db.ShoppingCarts.Remove(cart);
+			await _db.SaveChanges();
+			return NoContent();
 		}
 	}
 }

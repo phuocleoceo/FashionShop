@@ -10,8 +10,8 @@ namespace back_end.Data.Configuration
 		{
 			builder.HasData
 			(
-				new Product { Id = 1, Name = "Áo sơ mi trắng", Price = 250000, ImagePath = "a.png", CategoryId = 1 },
-				new Product { Id = 2, Name = "Áo croptop đen", Price = 200000, ImagePath = "b.png", CategoryId = 2 }
+				new Product { Id = 1, Name = "Áo sơ mi trắng", Price = 250000, Description = "Đơn giản là đẹp", ImagePath = "a.png", CategoryId = 1 },
+				new Product { Id = 2, Name = "Áo croptop đen", Price = 200000, Description = "Cực kì cá tính", ImagePath = "b.png", CategoryId = 2 }
 			);
 		}
 	}

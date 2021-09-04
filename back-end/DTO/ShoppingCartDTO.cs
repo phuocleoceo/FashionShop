@@ -11,5 +11,7 @@ namespace back_end.DTO
 		public double Price { get; set; }
 
 		public int Count { get; set; }
+
+		public double Total => Price * Count;
 	}
 }

@@ -11,6 +11,8 @@ namespace back_end.DTO
 		[Range(1, 9999999)]
 		public double Price { get; set; }
 
+		public string Description { get; set; }
+
 		[Required]
 		public string ImagePath { get; set; }
 
