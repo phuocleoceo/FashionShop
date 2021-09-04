@@ -6,6 +6,8 @@ axios
 
 @material-ui/icons
 
+@material-ui/lab
+
 react-redux
 
 @reduxjs/toolkit
