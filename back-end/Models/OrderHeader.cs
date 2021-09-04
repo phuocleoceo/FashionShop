@@ -38,5 +38,12 @@ namespace back_end.Models
 		{
 			OrderDetails = new HashSet<OrderDetail>();
 		}
+
+		// Change infor when CheckOut
+		public string Name { get; set; }
+
+		public string PhoneNumber { get; set; }
+
+		public string Address { get; set; }
 	}
 }
