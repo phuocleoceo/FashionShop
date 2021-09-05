@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { GET_PRODUCT } from '../../api/apiProduct';
+import { GET_PRODUCT, DELETE_PRODUCT } from '../../api/apiProduct';
 import {
 	Container, Table, TableContainer, Paper,
 	TableHead, TableRow, TableCell, TableBody,
 	styled, IconButton, TablePagination, Grid
 } from '@material-ui/core';
 import { PHOTO_PATH_URL } from '../../extension/AppURL';
+import { toast } from 'react-toastify';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -26,15 +27,27 @@ export default function Product() {
 	const [listProduct, setListProduct] = useState([]);
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(5);
-	useEffect(() => {
-		const getPrd = async () => {
-			const response = await GET_PRODUCT();
-			if (response.status === 200) {
-				setListProduct(response.data);
+	useEffect(() => getPrd(), []);
+
+	const getPrd = async () => {
+		const response = await GET_PRODUCT();
+		if (response.status === 200) {
+			setListProduct(response.data);
+		}
+	};
+
+	const handleDeleteProduct = async (productId) => {
+		if (window.confirm('Are you confirm to delete ?')) {
+			const check = await DELETE_PRODUCT(productId);
+			if (check.status === 204) {
+				toast.success("Delete Product Successfully !");
 			}
-		};
-		getPrd();
-	}, []);
+			else {
+				toast.error("Delete Product Failure !");
+			}
+			getPrd();
+		}
+	}
 
 	const handleChangePage = (e, newPage) => {
 		setPage(newPage);
@@ -83,7 +96,7 @@ export default function Product() {
 												<IconButton>
 													<EditIcon color="primary" />
 												</IconButton>
-												<IconButton>
+												<IconButton onClick={() => handleDeleteProduct(prd.Id)}>
 													<DeleteIcon color="secondary" />
 												</IconButton>
 											</TableCell>
