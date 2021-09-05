@@ -1,21 +1,45 @@
+import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Header from './components/Header';
-import Home from './components/Home';
-import Login from './components/Login';
 import NotFound from './components/NotFound';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useDispatch } from 'react-redux';
+import { CheckLoggedIn } from './redux/slices/authenticationSlice';
+import Navigation from './components/Navigation';
+import Home from './components/Home';
+import Login from './components/Authentication/Login';
+import Register from './components/Authentication/Register';
 
 function App() {
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(CheckLoggedIn());
+	}, [dispatch]);
+
 	return (
 		<>
 			<BrowserRouter>
-				<Header />
+				<Navigation />
 
 				<Switch>
 					<Route path="/" exact component={Home} />
 					<Route path="/login" component={Login} />
+					<Route path="/register" component={Register} />
 					<Route component={NotFound} />
 				</Switch>
 			</BrowserRouter>
+
+			<ToastContainer
+				position="top-center"
+				autoClose={3000}
+				hideProgressBar={false}
+				newestOnTop={false}
+				closeOnClick
+				rtl={false}
+				pauseOnFocusLoss
+				draggable
+				pauseOnHover
+			/>
 		</>
 	);
 }

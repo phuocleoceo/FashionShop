@@ -17,14 +17,14 @@ namespace back_end.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	public class UserController : ControllerBase
+	public class AuthenticationController : ControllerBase
 	{
 		private readonly IMapper _mapper;
 		private readonly UserManager<User> _userManager;
 		private readonly IAuthenticationManager _authManager;
 		private readonly IConfiguration _configuration;
 
-		public UserController(IMapper mapper, UserManager<User> userManager,
+		public AuthenticationController(IMapper mapper, UserManager<User> userManager,
 								IAuthenticationManager authManager, IConfiguration configuration)
 		{
 			_mapper = mapper;
@@ -113,10 +113,20 @@ namespace back_end.Controllers
 			_user.RefreshToken = newRefreshToken; // Not change ExpireDay, it's only changed when Re-Login or Revoke
 			await _userManager.UpdateAsync(_user);
 
+			var userInfor = new
+			{
+				Id = _user.Id,
+				Name = _user.Name,
+				Address = _user.Address,
+				UserName = _user.UserName,
+				Email = _user.Email,
+				PhoneNumber = _user.PhoneNumber
+			};
 			return Ok(new
 			{
 				AccessToken = newAccessToken,
-				RefreshToken = newRefreshToken
+				RefreshToken = newRefreshToken,
+				User = userInfor
 			});
 		}
 

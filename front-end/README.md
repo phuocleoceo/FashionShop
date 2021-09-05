@@ -15,3 +15,5 @@ react-redux
 react-router-dom
 
 react-hook-form
+
+react-toastify
