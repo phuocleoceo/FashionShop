@@ -15,7 +15,7 @@ import Category from './dashboard/Category';
 import Product from './dashboard/Product'
 
 function App() {
-	const isLoggedIn = useSelector(state => state.authentication.isLoggedIn);
+	const isLoggedIn = useSelector(state => state.authentication.Id); //if notLoggedIn Id will be undefined
 	const userId = useSelector(state => state.authentication.Id);
 	const dispatch = useDispatch();
 

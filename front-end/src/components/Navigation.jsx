@@ -11,7 +11,7 @@ import { Logout } from '../redux/slices/authenticationSlice';
 import { useHistory } from 'react-router-dom';
 
 export default function Navigation() {
-	const isLoggedIn = useSelector(state => state.authentication.isLoggedIn);
+	const isLoggedIn = useSelector(state => state.authentication.Id); //if notLoggedIn Id will be undefined
 	const cart = useSelector(state => state.cart);
 	const dispatch = useDispatch();
 	const history = useHistory();

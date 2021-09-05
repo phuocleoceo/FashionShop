@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { PHOTO_PATH_URL } from '../extension/AppURL';
+import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { Get_Cart, Add_To_Cart } from '../redux/slices/cartSlice';
 import { GET_PRODUCT } from '../api/apiProduct';
+import { toast } from 'react-toastify';
 import {
 	Grid, Card, CardActionArea,
 	CardActions, CardContent, CardMedia,
@@ -15,6 +19,9 @@ const ImgCardStyle = {
 
 export default function Home() {
 	const [listProduct, setListProduct] = useState([]);
+	const userId = useSelector(state => state.authentication.Id);
+	const dispatch = useDispatch();
+	const history = useHistory();
 
 	useEffect(() => {
 		const getPrd = async () => {
@@ -25,6 +32,20 @@ export default function Home() {
 		};
 		getPrd();
 	}, []);
+
+	const handleAddToCart = async (productId) => {
+		if (userId) {
+			const newCartInfor = {
+				userId, productId, count: 1
+			};
+			const check = await dispatch(Add_To_Cart(newCartInfor));
+			if (check.payload) {
+				toast.success("Added to cart");
+				dispatch(Get_Cart(userId));
+			}
+		}
+		else history.push("/login");
+	}
 
 	return (
 		<Container style={{ marginTop: "12vh" }}>
@@ -51,7 +72,8 @@ export default function Home() {
 									</Typography>
 								</CardContent>
 								<CardActions>
-									<Button variant="contained" color="primary">
+									<Button variant="contained" color="primary"
+										onClick={() => handleAddToCart(prd.Id)}>
 										Add To Cart
 									</Button>
 								</CardActions>

@@ -27,31 +27,27 @@ export const LoginAction = createAsyncThunk(
 	}
 );
 
-const initialUser = {
-	isLoggedIn: false
-};
-
 export const authenticationSlice = createSlice({
 	name: 'authentication',
-	initialState: initialUser,
+	initialState: {},
 	reducers: {
 		CheckLoggedIn: (state, action) => {
 			const user = GET_USER();
-			if (user) return { ...user.User, isLoggedIn: true };
-			return initialUser;
+			if (user) return user.User;
+			return {};
 		},
 		Logout: (state, action) => {
 			REMOVE_USER();
-			return initialUser;
+			return {};
 		}
 	},
 	extraReducers: {
 		[LoginAction.fulfilled]: (state, action) => {
 			if (action.payload.Accepted) {
 				SET_USER(action.payload.ResponseData);
-				return { ...action.payload.ResponseData.User, isLoggedIn: true };
+				return action.payload.ResponseData.User;
 			}
-			return initialUser;
+			return {};
 		}
 	}
 })
