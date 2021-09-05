@@ -70,6 +70,7 @@ namespace back_end.Controllers
 			_user.RefreshTokenExpiryTime = DateTime.Now.AddDays(Convert.ToDouble(refreshTokenExpiryTime));
 			await _userManager.UpdateAsync(_user);
 
+			IList<string> roles = await _userManager.GetRolesAsync(_user);
 			var userInfor = new
 			{
 				Id = _user.Id,
@@ -77,7 +78,8 @@ namespace back_end.Controllers
 				Address = _user.Address,
 				UserName = _user.UserName,
 				Email = _user.Email,
-				PhoneNumber = _user.PhoneNumber
+				PhoneNumber = _user.PhoneNumber,
+				Role = roles[0]
 			};
 
 			return Ok(new
@@ -113,6 +115,7 @@ namespace back_end.Controllers
 			_user.RefreshToken = newRefreshToken; // Not change ExpireDay, it's only changed when Re-Login or Revoke
 			await _userManager.UpdateAsync(_user);
 
+			IList<string> roles = await _userManager.GetRolesAsync(_user);
 			var userInfor = new
 			{
 				Id = _user.Id,
@@ -120,7 +123,8 @@ namespace back_end.Controllers
 				Address = _user.Address,
 				UserName = _user.UserName,
 				Email = _user.Email,
-				PhoneNumber = _user.PhoneNumber
+				PhoneNumber = _user.PhoneNumber,
+				Role = roles[0]
 			};
 			return Ok(new
 			{
