@@ -14,6 +14,7 @@ namespace back_end.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
+	[Authorize]
 	public class OrderController : ControllerBase
 	{
 		private readonly IUnitOfWork _db;

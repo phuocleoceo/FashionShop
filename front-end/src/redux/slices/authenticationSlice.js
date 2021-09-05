@@ -28,25 +28,8 @@ export const LoginAction = createAsyncThunk(
 );
 
 const initialUser = {
-	Id: "",
-	Name: "",
-	Address: "",
-	UserName: "",
-	Email: "",
-	PhoneNumber: "",
 	isLoggedIn: false
-}
-const getUserFromLS = (user) => {
-	return {
-		Id: user.Id,
-		Name: user.Name,
-		Address: user.Address,
-		UserName: user.UserName,
-		Email: user.Email,
-		PhoneNumber: user.PhoneNumber,
-		isLoggedIn: true
-	}
-}
+};
 
 export const authenticationSlice = createSlice({
 	name: 'authentication',
@@ -54,7 +37,7 @@ export const authenticationSlice = createSlice({
 	reducers: {
 		CheckLoggedIn: (state, action) => {
 			const user = GET_USER();
-			if (user) return getUserFromLS(user);
+			if (user) return { ...user.User, isLoggedIn: true };
 			return initialUser;
 		},
 		Logout: (state, action) => {
@@ -66,7 +49,7 @@ export const authenticationSlice = createSlice({
 		[LoginAction.fulfilled]: (state, action) => {
 			if (action.payload.Accepted) {
 				SET_USER(action.payload.ResponseData);
-				return getUserFromLS(action.payload.ResponseData.User);
+				return { ...action.payload.ResponseData.User, isLoggedIn: true };
 			}
 			return initialUser;
 		}

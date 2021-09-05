@@ -12,6 +12,7 @@ namespace back_end.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
+	[Authorize]
 	public class CartController : ControllerBase
 	{
 		private readonly IUnitOfWork _db;

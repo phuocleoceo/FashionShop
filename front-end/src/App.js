@@ -3,14 +3,18 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import NotFound from './components/NotFound';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { CheckLoggedIn } from './redux/slices/authenticationSlice';
 import Navigation from './components/Navigation';
 import Home from './components/Home';
 import Login from './components/Authentication/Login';
 import Register from './components/Authentication/Register';
+import Cart from './components/Cart';
+import Category from './dashboard/Category';
+import Product from './dashboard/Product'
 
 function App() {
+	const isLoggedIn = useSelector(state => state.authentication.isLoggedIn);
 	const dispatch = useDispatch();
 	useEffect(() => {
 		dispatch(CheckLoggedIn());
@@ -25,6 +29,9 @@ function App() {
 					<Route path="/" exact component={Home} />
 					<Route path="/login" component={Login} />
 					<Route path="/register" component={Register} />
+					{isLoggedIn && <Route path="/cart" component={Cart} />}
+					{isLoggedIn && <Route path="/dashboard/category" component={Category} />}
+					{isLoggedIn && <Route path="/dashboard/product" component={Product} />}
 					<Route component={NotFound} />
 				</Switch>
 			</BrowserRouter>

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using back_end.DTO;
+using back_end.Extension;
 using back_end.Models;
 using back_end.Repository.Interface;
 using Microsoft.AspNetCore.Authorization;
@@ -12,6 +13,7 @@ namespace back_end.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
+	[Authorize(Roles = ConstantValue.Role_Admin)]
 	public class CategoryController : ControllerBase
 	{
 		private readonly IUnitOfWork _db;
@@ -24,6 +26,7 @@ namespace back_end.Controllers
 		}
 
 		[HttpGet]
+		[AllowAnonymous]
 		public async Task<IEnumerable<CategoryDTO>> GetCategories()
 		{
 			IEnumerable<Category> ctgs = await _db.Categories.GetAll();
