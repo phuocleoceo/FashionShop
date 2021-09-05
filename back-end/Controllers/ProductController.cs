@@ -17,7 +17,7 @@ namespace back_end.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	[Authorize(Roles = ConstantValue.Role_Admin)]
+	[Authorize]
 	public class ProductController : ControllerBase
 	{
 		private readonly IUnitOfWork _db;

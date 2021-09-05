@@ -5,6 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { CheckLoggedIn } from './redux/slices/authenticationSlice';
+import { Get_Cart } from './redux/slices/cartSlice';
 import Navigation from './components/Navigation';
 import Home from './components/Home';
 import Login from './components/Authentication/Login';
@@ -15,10 +16,16 @@ import Product from './dashboard/Product'
 
 function App() {
 	const isLoggedIn = useSelector(state => state.authentication.isLoggedIn);
+	const userId = useSelector(state => state.authentication.Id);
 	const dispatch = useDispatch();
+
 	useEffect(() => {
 		dispatch(CheckLoggedIn());
 	}, [dispatch]);
+
+	useEffect(() => {
+		dispatch(Get_Cart(userId));
+	}, [dispatch, userId]);
 
 	return (
 		<>

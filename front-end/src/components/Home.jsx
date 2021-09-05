@@ -15,6 +15,7 @@ const ImgCardStyle = {
 
 export default function Home() {
 	const [listProduct, setListProduct] = useState([]);
+
 	useEffect(() => {
 		const getPrd = async () => {
 			const response = await GET_PRODUCT();

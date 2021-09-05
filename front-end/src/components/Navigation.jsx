@@ -12,8 +12,10 @@ import { useHistory } from 'react-router-dom';
 
 export default function Navigation() {
 	const isLoggedIn = useSelector(state => state.authentication.isLoggedIn);
+	const cart = useSelector(state => state.cart);
 	const dispatch = useDispatch();
 	const history = useHistory();
+
 	const handleLogout = () => {
 		dispatch(Logout());
 		history.push("/");
@@ -51,7 +53,8 @@ export default function Navigation() {
 							</Link>
 							<Link to="/cart" style={{ flexGrow: 1 }}>
 								<IconButton>
-									<Badge badgeContent="0" color="secondary">
+									<Badge color="secondary"
+										badgeContent={cart.length > 0 ? cart.length : "0"}>
 										<ShoppingCartIcon fontSize="large" />
 									</Badge>
 								</IconButton>

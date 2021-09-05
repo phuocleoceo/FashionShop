@@ -68,7 +68,7 @@ export default function Product() {
 									.map(prd => (
 										<TableRow key={prd.Id}>
 											<TableCell>{prd.Name}</TableCell>
-											<TableCell>{prd.Price}</TableCell>
+											<TableCell>{prd.Price} VNĐ</TableCell>
 											<TableCell>
 												{prd.Description.length > 20
 													? prd.Description.substring(0, 20) + "..."

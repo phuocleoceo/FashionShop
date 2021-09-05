@@ -20,7 +20,8 @@ namespace back_end.Mapper
 
 			CreateMap<ShoppingCart, ShoppingCartDTO>()
 				.ForMember(scDTO => scDTO.Product, prop => prop.MapFrom(sc => sc.Product.Name))
-				.ForMember(scDTO => scDTO.Price, prop => prop.MapFrom(sc => sc.Product.Price));
+				.ForMember(scDTO => scDTO.Price, prop => prop.MapFrom(sc => sc.Product.Price))
+				.ForMember(scDTO => scDTO.ImagePath, prop => prop.MapFrom(sc => sc.Product.ImagePath));
 			CreateMap<ShoppingCartAddDTO, ShoppingCart>();
 		}
 	}
