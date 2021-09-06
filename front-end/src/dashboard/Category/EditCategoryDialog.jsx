@@ -36,15 +36,6 @@ export default function EditCategoryDialog(props) {
 				<DialogTitle>Edit Category</DialogTitle>
 				<DialogContent>
 					<TextField
-						disabled
-						autoFocus
-						margin="dense"
-						defaultValue={currentCtg.Id}
-						label="Id"
-						type="text"
-						fullWidth
-					/>
-					<TextField
 						required
 						autoFocus
 						margin="dense"

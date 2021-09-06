@@ -37,7 +37,7 @@ export default function Category() {
 		}
 	};
 
-	const handleEditCtg = (ctg) => {
+	const handleEditCategory = (ctg) => {
 		setCurrentCtg(ctg);
 		setEditDialogShow(true);
 	}
@@ -87,7 +87,7 @@ export default function Category() {
 											<TableCell>{ctg.Name}</TableCell>
 
 											<TableCell>
-												<IconButton onClick={() => handleEditCtg(ctg)} >
+												<IconButton onClick={() => handleEditCategory(ctg)} >
 													<EditIcon color="primary" />
 												</IconButton>
 												<IconButton onClick={() => handleDeleteCategory(ctg.Id)}>

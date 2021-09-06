@@ -11,6 +11,7 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddProductDialog from './AddProductDialog';
+import EditProductDialog from './EditProductDialog';
 
 const Image = styled("img")({
 	width: "10vh",
@@ -29,6 +30,10 @@ export default function Product() {
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(5);
 	const [addDialogShow, setAddDialogShow] = useState(false);
+	const [editDialogShow, setEditDialogShow] = useState(false);
+	const [currentPrd, setCurrentPrd] = useState({
+		Id: 0, Name: "", Price: 0, Description: "", CategoryId: 0, ImagePath: ""
+	});
 	const [reload, setReload] = useState(false);
 
 	useEffect(() => getPrd(), [reload]);
@@ -39,6 +44,11 @@ export default function Product() {
 			setListProduct(response.data);
 		}
 	};
+
+	const handleEditProduct = (prd) => {
+		setCurrentPrd(prd);
+		setEditDialogShow(true);
+	}
 
 	const handleDeleteProduct = async (productId) => {
 		if (window.confirm('Are you confirm to delete ?')) {
@@ -99,7 +109,7 @@ export default function Product() {
 												<Image src={PHOTO_PATH_URL + prd.ImagePath} alt="productIMG" />
 											</TableCell>
 											<TableCell>
-												<IconButton>
+												<IconButton onClick={() => handleEditProduct(prd)}>
 													<EditIcon color="primary" />
 												</IconButton>
 												<IconButton onClick={() => handleDeleteProduct(prd.Id)}>
@@ -140,7 +150,12 @@ export default function Product() {
 				onReload={reloadPage}
 			/>
 
-
+			<EditProductDialog
+				open={editDialogShow}
+				handleClose={() => setEditDialogShow(false)}
+				onReload={reloadPage}
+				currentPrd={currentPrd}
+			/>
 		</Container>
 	)
 }

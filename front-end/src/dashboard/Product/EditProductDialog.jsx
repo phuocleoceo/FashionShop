@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from "react-hook-form";
-import { POST_PRODUCT, SAVE_PHOTO } from '../../api/apiProduct';
+import { PUT_PRODUCT, SAVE_PHOTO } from '../../api/apiProduct';
 import { GET_CATEGORY } from '../../api/apiCategory';
 import { toast } from 'react-toastify';
 import {
@@ -8,16 +8,21 @@ import {
 	DialogTitle, TextField, IconButton, Grid, MenuItem, FormControl
 } from '@material-ui/core';
 import CancelIcon from '@material-ui/icons/Cancel';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import EditIcon from '@material-ui/icons/Edit';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import { PHOTO_PATH_URL } from '../../extension/AppURL';
 
-export default function AddProductDialog(props) {
-	const { open, handleClose, onReload } = props;
+export default function EditProductDialog(props) {
+	const { open, handleClose, onReload, currentPrd } = props;
 	const { register, handleSubmit, reset } = useForm();
 	const [ctg, setCtg] = useState([]);
-	const [image, setImage] = useState(PHOTO_PATH_URL + "NewProduct.jpg");
+	const [image, setImage] = useState("");
 	const [selectedImage, setSelectedImage] = useState();
+
+	useEffect(() => {
+		setImage(PHOTO_PATH_URL + currentPrd.ImagePath);
+		reset(currentPrd); //Fix defaultValue in react-hook-form
+	}, [reset, currentPrd]);
 
 	useEffect(() => getCtg(), []);
 
@@ -32,20 +37,21 @@ export default function AddProductDialog(props) {
 		const infor = {
 			...data,
 			price: parseFloat(data.price),
-			imagePath: selectedImage ? selectedImage.name : "NewProduct.jpg"
+			imagePath: selectedImage ? selectedImage.name : currentPrd.ImagePath
 		};
-		const check = await POST_PRODUCT(infor);
-		if (check.status === 201) {
-			toast.success("Add Product Successfully");
+		const check = await PUT_PRODUCT(currentPrd.Id, infor);
+		if (check.status === 204) {
+			toast.success("Edit Product Successfully");
 			reset();  // Reset Registered TextField
 			handleClose();
 			onReload();
 			if (selectedImage) await savePhoto(selectedImage);
 		}
 		else {
-			toast.error("Add Product Failure !");
+			toast.error("Edit Product Failure !");
 		}
 	};
+
 	const savePhoto = async (photo) => {
 		const formData = new FormData();
 		formData.append("myFile", photo, photo.name);
@@ -61,7 +67,7 @@ export default function AddProductDialog(props) {
 	return (
 		<Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
 			<form onSubmit={handleSubmit(onSubmit)}>
-				<DialogTitle>Add Product</DialogTitle>
+				<DialogTitle>Edit Product</DialogTitle>
 				<DialogContent style={{ height: "37vh" }}>
 					<Grid container spacing={5}>
 						<Grid item xs={12} sm={6}>
@@ -69,6 +75,7 @@ export default function AddProductDialog(props) {
 								required
 								autoFocus
 								margin="dense"
+								defaultValue={currentPrd.Name}
 								{...register("name")}
 								label="Name"
 								type="text"
@@ -77,6 +84,7 @@ export default function AddProductDialog(props) {
 							<TextField
 								required
 								margin="dense"
+								defaultValue={currentPrd.Price}
 								{...register("price")}
 								label="Price"
 								type="text"
@@ -84,6 +92,7 @@ export default function AddProductDialog(props) {
 							/>
 							<TextField
 								margin="dense"
+								defaultValue={currentPrd.Description}
 								{...register("description")}
 								label="Description"
 								type="text"
@@ -92,7 +101,7 @@ export default function AddProductDialog(props) {
 
 							<FormControl style={{ minWidth: "100%" }}>
 								<InputLabel>Category</InputLabel>
-								<Select {...register("categoryId")}>
+								<Select {...register("categoryId")} defaultValue={currentPrd.CategoryId}>
 									{
 										ctg.map(c => (
 											<MenuItem value={c.Id}>{c.Name}</MenuItem>
@@ -126,7 +135,7 @@ export default function AddProductDialog(props) {
 						<CancelIcon fontSize="large" />
 					</IconButton>
 					<IconButton type="submit" color="primary">
-						<AddCircleIcon fontSize="large" />
+						<EditIcon fontSize="large" />
 					</IconButton>
 				</DialogActions>
 			</form>
