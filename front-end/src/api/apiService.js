@@ -14,12 +14,14 @@ callAPI.interceptors.request.use((config) => {
 	config.headers["Authorization"] = "Bearer " + GET_ACCESS_TOKEN();
 	return config;
 }, (error) => {
-	Promise.reject(error);
-})
+	return Promise.reject(error);
+});
 
 callAPI.interceptors.response.use((response) => {
+	console.log("response accepted");
 	return response;
 }, async (error) => {
+	console.log("response rejected");
 	const originalRequest = error.config;
 	if (error.response.status === 401 && !originalRequest._retry) {
 		originalRequest._retry = true;
@@ -31,12 +33,7 @@ callAPI.interceptors.response.use((response) => {
 		// RefreshToken
 		const check = await callAPI.post("authentication/refresh", tokenAPI);
 		if (check.status === 200) {
-			const newUser = {
-				AccessToken: check.data.AccessToken,
-				RefreshToken: check.data.RefreshToken,
-				User: check.data.User
-			}
-			SET_USER(newUser);
+			SET_USER(check.data);
 			// Recall API
 			callAPI.defaults.headers.common["Authorization"] = "Bearer " + check.data.AccessToken;
 			return callAPI(originalRequest);
@@ -45,6 +42,6 @@ callAPI.interceptors.response.use((response) => {
 
 		return Promise.reject(error);
 	}
-});
+})
 
 export default callAPI;

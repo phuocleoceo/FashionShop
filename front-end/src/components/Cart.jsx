@@ -7,6 +7,7 @@ import {
 	styled, IconButton, Typography, TablePagination
 } from '@material-ui/core';
 import { PHOTO_PATH_URL } from '../extension/AppURL';
+import { numberWithCommas } from '../extension/DataHandle';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IndeterminateCheckBoxIcon from '@material-ui/icons/IndeterminateCheckBox';
 import AddBoxIcon from '@material-ui/icons/AddBox';
@@ -27,7 +28,7 @@ const TableCellBold = styled(TableCell)({
 });
 
 export default function Cart() {
-	const [total, setTotal] = useState(0);
+	const [total, setTotal] = useState("");
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(5);
 	const userId = useSelector(state => state.authentication.Id);
@@ -35,11 +36,11 @@ export default function Cart() {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		let total = 0;
+		let sum = 0;
 		cart.forEach(c => {
-			total += c.Total;
+			sum += c.Total;
 		});
-		setTotal(total);
+		setTotal(numberWithCommas(sum));
 	}, [cart]);
 
 	const handleMinus = async (cartId) => {

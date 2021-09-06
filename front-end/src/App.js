@@ -24,7 +24,7 @@ function App() {
 	}, [dispatch]);
 
 	useEffect(() => {
-		dispatch(Get_Cart(userId));
+		if (userId) dispatch(Get_Cart(userId));
 	}, [dispatch, userId]);
 
 	return (

@@ -4,11 +4,8 @@ import { GET_CART, ADD_TO_CART, PLUS_CART, MINUS_CART, REMOVE_CART } from '../..
 export const Get_Cart = createAsyncThunk(
 	"cart/Get_Cart",
 	async (userId) => {
-		try {
-			const response = await GET_CART(userId);
-			return response.data;
-		}
-		catch { return []; }
+		const response = await GET_CART(userId);
+		return response.data;
 	}
 );
 

@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import AddProductDialog from './AddProductDialog';
 
 const Image = styled("img")({
 	width: "10vh",
@@ -27,7 +28,10 @@ export default function Product() {
 	const [listProduct, setListProduct] = useState([]);
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(5);
-	useEffect(() => getPrd(), []);
+	const [addDialogShow, setAddDialogShow] = useState(false);
+	const [reload, setReload] = useState(false);
+
+	useEffect(() => getPrd(), [reload]);
 
 	const getPrd = async () => {
 		const response = await GET_PRODUCT();
@@ -48,6 +52,8 @@ export default function Product() {
 			getPrd();
 		}
 	}
+
+	const reloadPage = () => setReload(!reload);
 
 	const handleChangePage = (e, newPage) => {
 		setPage(newPage);
@@ -109,7 +115,8 @@ export default function Product() {
 
 				<Grid container>
 					<Grid item xs={12} sm={6}>
-						<IconButton style={{ marginTop: "2px", marginLeft: "10px" }}>
+						<IconButton style={{ marginTop: "2px", marginLeft: "10px" }}
+							onClick={() => setAddDialogShow(true)}>
 							<AddCircleIcon color="primary" />
 						</IconButton>
 					</Grid>
@@ -127,6 +134,13 @@ export default function Product() {
 					</Grid>
 				</Grid>
 			</Paper>
+			<AddProductDialog
+				open={addDialogShow}
+				handleClose={() => setAddDialogShow(false)}
+				onReload={reloadPage}
+			/>
+
+
 		</Container>
 	)
 }

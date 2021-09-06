@@ -14,7 +14,7 @@ export default function EditCategoryDialog(props) {
 	const { register, handleSubmit, reset } = useForm();
 
 	useEffect(() => {
-		reset({ name: currentCtg.Name }); //Fix defaultValue in react-hook-form
+		reset(currentCtg); //Fix defaultValue in react-hook-form
 	}, [reset, currentCtg]);
 
 	const onSubmit = async (data) => {
@@ -33,7 +33,7 @@ export default function EditCategoryDialog(props) {
 	return (
 		<Dialog open={open} onClose={handleClose} fullWidth maxWidth="xs">
 			<form onSubmit={handleSubmit(onSubmit)}>
-				<DialogTitle>Add Category</DialogTitle>
+				<DialogTitle>Edit Category</DialogTitle>
 				<DialogContent>
 					<TextField
 						disabled
