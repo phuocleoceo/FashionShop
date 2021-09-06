@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Get_Cart, Add_To_Cart } from '../redux/slices/cartSlice';
 import { GET_PRODUCT } from '../api/apiProduct';
 import { toast } from 'react-toastify';
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import {
 	Grid, Card, CardActionArea,
 	CardActions, CardContent, CardMedia,
@@ -47,6 +48,8 @@ export default function Home() {
 		else history.push("/login");
 	}
 
+	const RedirectToDetail = (productId) => history.push("/" + productId);
+
 	return (
 		<Container style={{ marginTop: "12vh" }}>
 			<Grid container spacing={5}>
@@ -61,6 +64,7 @@ export default function Home() {
 										style={ImgCardStyle}
 										image={PHOTO_PATH_URL + prd.ImagePath}
 										title="ProductImage"
+										onClick={() => RedirectToDetail(prd.Id)}
 									/>
 								</CardActionArea>
 								<CardContent>
@@ -73,6 +77,7 @@ export default function Home() {
 								</CardContent>
 								<CardActions>
 									<Button variant="contained" color="primary"
+										startIcon={<AddShoppingCartIcon />}
 										onClick={() => handleAddToCart(prd.Id)}>
 										Add To Cart
 									</Button>

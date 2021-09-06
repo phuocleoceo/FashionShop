@@ -40,6 +40,7 @@ namespace back_end.Controllers
 		}
 
 		[HttpGet("{id}")]
+		[AllowAnonymous]
 		public async Task<ActionResult<ProductDTO>> GetProduct(int id)
 		{
 			Product prd = await _db.Products.GetFirstOrDefault(c => c.Id == id,

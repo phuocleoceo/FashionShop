@@ -13,6 +13,7 @@ import Register from './components/Authentication/Register';
 import Cart from './components/Cart';
 import Category from './dashboard/Category';
 import Product from './dashboard/Product'
+import ProductDetail from './components/ProductDetail';
 
 function App() {
 	const isLoggedIn = useSelector(state => state.authentication.Id); //if notLoggedIn Id will be undefined
@@ -39,6 +40,7 @@ function App() {
 					{isLoggedIn && <Route path="/cart" component={Cart} />}
 					{isLoggedIn && <Route path="/dashboard/category" component={Category} />}
 					{isLoggedIn && <Route path="/dashboard/product" component={Product} />}
+					<Route path="/:productId" children={<ProductDetail />} />
 					<Route component={NotFound} />
 				</Switch>
 			</BrowserRouter>
