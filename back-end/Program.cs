@@ -85,7 +85,7 @@ app.UseEndpoints(endpoints =>
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(
-        Path.Combine(Directory.GetCurrentDirectory(), "Photos")),
+                Path.Combine(Directory.GetCurrentDirectory(), "Photos")),
     RequestPath = "/Photos"
 });
 

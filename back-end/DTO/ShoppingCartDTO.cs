@@ -1,18 +1,17 @@
-namespace back_end.DTO
+namespace back_end.DTO;
+
+public class ShoppingCartDTO
 {
-	public class ShoppingCartDTO
-	{
-		public int Id { get; set; }
+    public int Id { get; set; }
 
-		public string UserId { get; set; }
+    public string UserId { get; set; }
 
-		public int ProductId { get; set; }
-		public string Product { get; set; }
-		public double Price { get; set; }
-		public string ImagePath { get; set; }
+    public int ProductId { get; set; }
+    public string Product { get; set; }
+    public double Price { get; set; }
+    public string ImagePath { get; set; }
 
-		public int Count { get; set; }
+    public int Count { get; set; }
 
-		public double Total => Price * Count;
-	}
+    public double Total => Price * Count;
 }

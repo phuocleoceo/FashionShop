@@ -1,10 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace back_end.DTO
+namespace back_end.DTO;
+
+public class CategoryUpsertDTO
 {
-	public class CategoryUpsertDTO
-	{
-		[Required]
-		public string Name { get; set; }
-	}
+    [Required]
+    public string Name { get; set; }
 }

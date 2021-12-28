@@ -1,10 +1,9 @@
 using System.Threading.Tasks;
 using back_end.Models;
 
-namespace back_end.Repository.Interface
+namespace back_end.Repository.Interface;
+
+public interface IUserRepository : IRepository<User>
 {
-	public interface IUserRepository : IRepository<User>
-	{
-		Task<bool> IsExists(string id);
-	}
+    Task<bool> IsExists(string id);
 }

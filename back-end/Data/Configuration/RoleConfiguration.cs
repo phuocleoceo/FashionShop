@@ -1,26 +1,24 @@
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace back_end.Data.Configuration
+namespace back_end.Data.Configuration;
+public class RoleConfiguration : IEntityTypeConfiguration<IdentityRole>
 {
-	public class RoleConfiguration : IEntityTypeConfiguration<IdentityRole>
-	{
-		public void Configure(EntityTypeBuilder<IdentityRole> builder)
-		{
-			builder.HasData
-			(
-				new IdentityRole
-				{
-					Name = "Admin",
-					NormalizedName = "ADMIN"
-				},
-				new IdentityRole
-				{
-					Name = "Customer",
-					NormalizedName = "CUSTOMER"
-				}
-			);
-		}
-	}
+    public void Configure(EntityTypeBuilder<IdentityRole> builder)
+    {
+        builder.HasData
+        (
+            new IdentityRole
+            {
+                Name = "Admin",
+                NormalizedName = "ADMIN"
+            },
+            new IdentityRole
+            {
+                Name = "Customer",
+                NormalizedName = "CUSTOMER"
+            }
+        );
+    }
 }
